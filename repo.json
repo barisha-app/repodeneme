@@ -1,9 +1,8 @@
 {
-  "iconUrl": "https://raw.githubusercontent.com/Kraptor123/Cs-Karma/refs/heads/master/.github/logo/cskarma.png",
-  "name": "cs-karma",
-  "description": "Plugins Across All Categories and Languages.",
+  "name": "repodeneme",
+  "description": "Kendi Cloudstream depom",
   "manifestVersion": 1,
   "pluginLists": [
-    "https://raw.githubusercontent.com/Kraptor123/Cs-Karma/refs/heads/builds/plugins.json"
+    "https://raw.githubusercontent.com/barisha-app/repodeneme/main/plugins.json"
   ]
 }
