@@ -1,6 +1,5 @@
 # repodeneme
 
-Kısa açıklama burada.
+Cloudstream depo adresi:
 
-Repo URL:
 https://raw.githubusercontent.com/barisha-app/repodeneme/main/repo.json
