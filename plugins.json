@@ -1,15 +1,1 @@
-[
-  {
-    "name": "Dramaizle",
-    "internalName": "Dramaizle",
-    "description": "Kendi eklentim",
-    "version": 1,
-    "status": 1,
-    "apiVersion": 1,
-    "language": "tr",
-    "authors": ["barisha-app"],
-    "tvTypes": ["Movie", "TvSeries"],
-    "repositoryUrl": "https://github.com/barisha-app/repodeneme",
-    "url": "https://github.com/barisha-app/repodeneme/releases/download/v1.0.0/Dramaizle.cs3"
-  }
-]
+[]
