@@ -1,6 +1,7 @@
-import com.lagradost.cloudstream3.gradle.CloudstreamExtension
 import com.android.build.gradle.BaseExtension
-import org.gradle.kotlin.dsl.register
+import com.lagradost.cloudstream3.gradle.CloudstreamExtension
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
 buildscript {
     repositories {
@@ -10,9 +11,9 @@ buildscript {
     }
 
     dependencies {
-        classpath("com.android.tools.build:gradle:8.13.2")
-        classpath("com.github.recloudstream:gradle:cce1b8d84d")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.3.0")
+        classpath("com.android.tools.build:gradle:8.7.3")
+        classpath("com.github.recloudstream:gradle:-SNAPSHOT")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.1.0")
     }
 }
 
@@ -27,17 +28,8 @@ allprojects {
 fun Project.cloudstream(configuration: CloudstreamExtension.() -> Unit) =
     extensions.getByName<CloudstreamExtension>("cloudstream").configuration()
 
-fun Project.android(configuration: BaseExtension.() -> Unit) {
-    extensions.getByName<BaseExtension>("android").apply {
-        (extensions.findByName("java") as? JavaPluginExtension)?.apply {
-            toolchain {
-                languageVersion.set(JavaLanguageVersion.of(17))
-            }
-        }
-
-        configuration()
-    }
-}
+fun Project.android(configuration: BaseExtension.() -> Unit) =
+    extensions.getByName<BaseExtension>("android").configuration()
 
 subprojects {
     apply(plugin = "com.android.library")
@@ -45,7 +37,7 @@ subprojects {
     apply(plugin = "com.lagradost.cloudstream3.gradle")
 
     cloudstream {
-        setRepo(System.getenv("GITHUB_REPOSITORY") ?: "https://github.com/barisha-app/repodeneme")
+        setRepo(System.getenv("GITHUB_REPOSITORY") ?: "barisha-app/repodeneme")
         authors = listOf("barisha-app")
     }
 
@@ -54,8 +46,8 @@ subprojects {
 
         defaultConfig {
             minSdk = 21
-            compileSdkVersion(36)
-            targetSdk = 36
+            compileSdkVersion(35)
+            targetSdk = 35
         }
 
         compileOptions {
@@ -63,16 +55,13 @@ subprojects {
             targetCompatibility = JavaVersion.VERSION_1_8
         }
 
-        tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile> {
+        tasks.withType<KotlinJvmCompile> {
             compilerOptions {
-                jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_1_8)
+                jvmTarget.set(JvmTarget.JVM_1_8)
                 freeCompilerArgs.addAll(
-                    listOf(
-                        "-Xno-call-assertions",
-                        "-Xno-param-assertions",
-                        "-Xno-receiver-assertions",
-                        "-Xannotation-default-target=param-property"
-                    )
+                    "-Xno-call-assertions",
+                    "-Xno-param-assertions",
+                    "-Xno-receiver-assertions"
                 )
             }
         }
@@ -85,16 +74,12 @@ subprojects {
         cloudstream("com.lagradost:cloudstream3:pre-release")
 
         implementation(kotlin("stdlib"))
-        implementation("com.github.Blatzar:NiceHttp:0.4.13")
-        implementation("org.jsoup:jsoup:1.22.1")
-        implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.5")
-        implementation("com.fasterxml.jackson.core:jackson-databind:2.13.5")
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
-        implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
-        implementation("androidx.appcompat:appcompat:1.7.1")
+        implementation("com.github.Blatzar:NiceHttp:0.4.11")
+        implementation("org.jsoup:jsoup:1.18.3")
+        implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.1")
     }
 }
 
-tasks.register<Delete>("clean") {
+task<Delete>("clean") {
     delete(rootProject.layout.buildDirectory)
 }
